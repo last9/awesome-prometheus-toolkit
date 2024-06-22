@@ -1,0 +1,20 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus
+    ports:
+      - "9090:9090"
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter
+    ports:
+      - "9113:9113"
+    command: ["-nginx.scrape-uri", "http://nginx:8080/stub_status"]
+
+  nginx:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf

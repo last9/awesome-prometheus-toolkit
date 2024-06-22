@@ -1,0 +1,20 @@
+groups:
+  - name: example
+    rules:
+      - alert: NginxLatencyHigh
+        expr: histogram_quantile(0.99, sum(rate(nginx_http_request_duration_seconds_bucket[2m])) by (host, node, le)) > 3
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Nginx latency high (instance {{ $labels.instance }})"
+          description: "Nginx p99 latency is higher than 3 seconds\n VALUE = {{ $value }}\n LABELS = {{ $labels }}"
+
+      - alert: NginxDown
+        expr: up{job="nginx"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Nginx is down"
+          description: "Nginx service is not available."
