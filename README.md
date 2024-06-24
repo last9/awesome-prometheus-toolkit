@@ -7,8 +7,9 @@ _The most apt alert rules toolkit for your Prometheus setup._
 Connect your Prometheus setup. Discover components emitting metrics. Get recommendations of rules to be applied.
 
 Currently supported components:
+
 - Kubernetes
-- nginx
+- Nginx
 - PostgreSQL
 
 ## 📝 Convention
@@ -31,6 +32,24 @@ Currently supported components:
    ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+## 🔧 Setup Demo Prometheus Server (Optional)
+
+You can spin up a prometheus server with Nginx and some alerts locally to test APT. Here's how:
+
+1. Navigate to prometheus-server
+
+   ```bash
+   cd prometheus-server
+   ```
+
+2. Start the local prometheus server
+
+   ```bash
+   docker compose up
+   ```
+
+You can now access [http://localhost:9090](http://localhost:9090) through APT.
 
 ## About Last9
 
