@@ -6,6 +6,11 @@ _The most apt alert rules toolkit for your Prometheus setup._
 
 Connect your Prometheus setup. Discover components emitting metrics. Get recommendations of rules to be applied.
 
+Currently supported components:
+- Kubernetes
+- nginx
+- PostgreSQL
+
 ## 📝 Convention
 
 - [Gitmoji](https://gitmoji.dev/) for commits
