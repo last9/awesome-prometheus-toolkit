@@ -1,0 +1,128 @@
+groups:
+  - name: example
+    rules:
+      - alert: NginxLatencyHigh
+        expr: histogram_quantile(0.99, sum(rate(nginx_http_request_duration_seconds_bucket[2m])) by (host, node, le)) > 3
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Nginx latency high (instance {{ $labels.instance }})"
+          description: "Nginx p99 latency is higher than 3 seconds\n VALUE = {{ $value }}\n LABELS = {{ $labels }}"
+
+      - alert: NginxDown
+        expr: up{job="nginx"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Nginx is down"
+          description: "Nginx service is not available."
+
+      - alert: ClickhouseAccessDeniedErrors
+        expr: increase(ClickHouseErrorMetric_RESOURCE_ACCESS_DENIED[5m]) > 0
+        for: 0m
+        labels:
+          severity: info
+        annotations:
+          summary: ClickHouse Access Denied Errors (instance {{ $labels.instance }})
+          description: "Access denied errors have been logged, which could indicate permission issues or unauthorized access attempts.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ClickhouseHighNetworkTraffic
+        expr: ClickHouseMetrics_NetworkSend > 250 or ClickHouseMetrics_NetworkReceive > 250
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: ClickHouse High Network Traffic (instance {{ $labels.instance }})
+          description: "Network traffic is unusually high, may affect cluster performance.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ClickhouseDiskSpaceLowOnBackups
+        expr: ClickHouseAsyncMetrics_DiskAvailable_backups / (ClickHouseAsyncMetrics_DiskAvailable_backups + ClickHouseAsyncMetrics_DiskUsed_backups) * 100 < 20
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: ClickHouse Disk Space Low on Backups (instance {{ $labels.instance }})
+          description: "Disk space on backups is below 20%.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchHighQueryRate
+        expr: sum(rate(elasticsearch_indices_search_query_total[1m])) > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch High Query Rate (instance {{ $labels.instance }})
+          description: "The query rate on Elasticsearch cluster is higher than the threshold.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchClusterYellow
+        expr: elasticsearch_cluster_health_status{color="yellow"} == 1
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch Cluster Yellow (instance {{ $labels.instance }})
+          description: "Elastic Cluster Yellow status\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchHeapUsageTooHigh
+        expr: (elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"}) * 100 > 90
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Elasticsearch Heap Usage Too High (instance {{ $labels.instance }})
+          description: "The heap usage is over 90%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchHeapUsageWarning
+        expr: (elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"}) * 100 > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch Heap Usage warning (instance {{ $labels.instance }})
+          description: "The heap usage is over 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchHighIndexingRate
+        expr: sum(rate(elasticsearch_indices_indexing_index_total[1m]))> 10000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch High Indexing Rate (instance {{ $labels.instance }})
+          description: "The indexing rate on Elasticsearch cluster is higher than the threshold.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchNoNewDocuments
+        expr: increase(elasticsearch_indices_indexing_index_total{es_data_node="true"}[10m]) < 1
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch no new documents (instance {{ $labels.instance }})
+          description: "No new documents for 10 min!\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HaproxyHasNoAliveBackends
+        expr: haproxy_backend_active_servers + haproxy_backend_backup_servers == 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: HAproxy has no alive backends (instance {{ $labels.instance }})
+          description: "HAProxy has no alive active or backup backends for {{ $labels.proxy }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HaproxyServerConnectionErrors
+        expr: (sum by (proxy) (rate(haproxy_server_connection_errors_total[1m]))) > 100
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: HAProxy server connection errors (instance {{ $labels.instance }})
+          description: "Too many connection errors to {{ $labels.server }} server (> 100 req/s). Request throughput may be too high.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: PostgresqlLowXidConsumption
+        expr: rate(pg_txid_current[1m]) < 5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Postgresql low XID consumption (instance {{ $labels.instance }})
+          description: "Postgresql seems to be consuming transaction IDs very slowly\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
