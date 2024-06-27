@@ -6,16 +6,13 @@ _The most apt alert rules toolkit for your Prometheus setup._
 
 Connect your Prometheus setup. Discover components emitting metrics. Get recommendations of rules to be applied.
 
+[![Demo of Awesome Prometheus Toolkit](https://github.com/last9/awesome-prometheus-toolkit/assets/1834234/b0ed8f22-f2f2-4a3f-a8bb-76bd00753681)](https://www.youtube.com/watch?v=yFqCdkc23Gc)
+
 Currently supported components:
 
 - Kubernetes
 - Nginx
 - PostgreSQL
-
-## 📝 Convention
-
-- [Gitmoji](https://gitmoji.dev/) for commits
-- [npm](https://npm.io/) as package manager
 
 ## 💻 Getting Started
 
@@ -35,15 +32,15 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🔧 Setup Demo Prometheus Server (Optional)
 
-You can spin up a prometheus server with Nginx and some alerts locally to test APT. Here's how:
+You can spin up a demo Prometheus server with Nginx and some alerts locally to test APT. Here's how:
 
-1. Navigate to prometheus-server
+1. Navigate to `prometheus-server`
 
    ```bash
    cd prometheus-server
    ```
 
-2. Start the local prometheus server
+2. Start the local Prometheus server
 
    ```bash
    docker compose up
