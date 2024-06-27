@@ -12,3 +12,7 @@ scrape_configs:
   - job_name: "nginx"
     static_configs:
       - targets: ["nginx-exporter:9113"]
+
+  - job_name: "clickhouse"
+    static_configs:
+      - targets: ["clickhouse-exporter:9116"]

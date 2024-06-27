@@ -18,3 +18,39 @@ groups:
         annotations:
           summary: "Nginx is down"
           description: "Nginx service is not available."
+
+      - alert: ClickhouseAccessDeniedErrors
+        expr: increase(ClickHouseErrorMetric_RESOURCE_ACCESS_DENIED[5m]) > 0
+        for: 0m
+        labels:
+          severity: info
+        annotations:
+          summary: ClickHouse Access Denied Errors (instance {{ $labels.instance }})
+          description: "Access denied errors have been logged, which could indicate permission issues or unauthorized access attempts.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ClickhouseHighNetworkTraffic
+        expr: ClickHouseMetrics_NetworkSend > 250 or ClickHouseMetrics_NetworkReceive > 250
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: ClickHouse High Network Traffic (instance {{ $labels.instance }})
+          description: "Network traffic is unusually high, may affect cluster performance.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ClickhouseDiskSpaceLowOnBackups
+        expr: ClickHouseAsyncMetrics_DiskAvailable_backups / (ClickHouseAsyncMetrics_DiskAvailable_backups + ClickHouseAsyncMetrics_DiskUsed_backups) * 100 < 20
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: ClickHouse Disk Space Low on Backups (instance {{ $labels.instance }})
+          description: "Disk space on backups is below 20%.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ClickhouseMemoryUsageWarning
+        expr: ClickHouseAsyncMetrics_CGroupMemoryUsed / ClickHouseAsyncMetrics_CGroupMemoryTotal * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: ClickHouse Memory Usage Warning (instance {{ $labels.instance }})
+          description: "Memory usage is over 80%.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
