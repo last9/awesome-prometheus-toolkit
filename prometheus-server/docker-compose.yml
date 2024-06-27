@@ -24,18 +24,10 @@ services:
     ports:
       - "8123:8123"
       - "9000:9000"
+      - "9363:9363"
     volumes:
       - clickhouse-data:/var/lib/clickhouse
-
-  clickhouse-exporter:
-    image: flant/clickhouse-exporter
-    environment:
-      - CLICKHOUSE_EXPORTER_WEB_LISTEN_ADDRESS=:9116
-      - CLICKHOUSE_EXPORTER_CLICKHOUSE_ADDR=http://clickhouse:8123
-      - CLICKHOUSE_EXPORTER_CLICKHOUSE_USER=default
-      - CLICKHOUSE_EXPORTER_CLICKHOUSE_PASSWORD=
-    ports:
-      - "9116:9116"
+      - ./config.xml:/etc/clickhouse-server/config.d/config.xml
 
 volumes:
   clickhouse-data:
