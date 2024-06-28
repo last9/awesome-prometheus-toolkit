@@ -29,5 +29,24 @@ services:
       - clickhouse-data:/var/lib/clickhouse
       - ./config.xml:/etc/clickhouse-server/config.d/config.xml
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.1
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+
+  elasticsearch-exporter:
+    image: prometheuscommunity/elasticsearch-exporter
+    ports:
+      - "9114:9114"
+    environment:
+      - ES_URI=http://elasticsearch:9200
+      - ES_ALL=true
+
 volumes:
   clickhouse-data:
+  es-data:

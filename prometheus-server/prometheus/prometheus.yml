@@ -16,3 +16,7 @@ scrape_configs:
   - job_name: "clickhouse"
     static_configs:
       - targets: ["clickhouse-exporter:9116"]
+
+  - job_name: "elasticsearch"
+    static_configs:
+      - targets: ["elasticsearch-exporter:9114"]

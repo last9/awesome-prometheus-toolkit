@@ -54,3 +54,57 @@ groups:
         annotations:
           summary: ClickHouse Memory Usage Warning (instance {{ $labels.instance }})
           description: "Memory usage is over 80%.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchHighQueryRate
+        expr: sum(rate(elasticsearch_indices_search_query_total[1m])) > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch High Query Rate (instance {{ $labels.instance }})
+          description: "The query rate on Elasticsearch cluster is higher than the threshold.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchClusterYellow
+        expr: elasticsearch_cluster_health_status{color="yellow"} == 1
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch Cluster Yellow (instance {{ $labels.instance }})
+          description: "Elastic Cluster Yellow status\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchHeapUsageTooHigh
+        expr: (elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"}) * 100 > 90
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Elasticsearch Heap Usage Too High (instance {{ $labels.instance }})
+          description: "The heap usage is over 90%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchHeapUsageWarning
+        expr: (elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"}) * 100 > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch Heap Usage warning (instance {{ $labels.instance }})
+          description: "The heap usage is over 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchHighIndexingRate
+        expr: sum(rate(elasticsearch_indices_indexing_index_total[1m]))> 10000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch High Indexing Rate (instance {{ $labels.instance }})
+          description: "The indexing rate on Elasticsearch cluster is higher than the threshold.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: ElasticsearchNoNewDocuments
+        expr: increase(elasticsearch_indices_indexing_index_total{es_data_node="true"}[10m]) < 1
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: Elasticsearch no new documents (instance {{ $labels.instance }})
+          description: "No new documents for 10 min!\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
