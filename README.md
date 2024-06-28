@@ -6,7 +6,7 @@ _The most apt toolkit for your Prometheus setup._
 
 Kickstarting your monitoring journey with Prometheus is a broken experience and one struggles with a standardized set of components, alerting rules, and dashboards to use. APT aims to build a standardized resource across the instrumentation, query, and alerting pipelines.
 
-With the v0.1 of Awesome Prometheus Toolkit, we are setting a foundation for the developer experience we want:
+With the v0.1 of Awesome Prometheus Toolkit, we are setting a foundation for an amazing Prometheus developer experience we want:
 
 1. You point APT to your running Prometheus server
 2. APT identifies which components are sending metrics to Prometheus
