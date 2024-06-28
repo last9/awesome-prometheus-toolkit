@@ -7,7 +7,7 @@ rule_files:
 scrape_configs:
   - job_name: "prometheus"
     static_configs:
-      - targets: ["localhost:9090"]
+      - targets: ["prometheus:9090"]
 
   - job_name: "nginx"
     static_configs:
@@ -15,8 +15,12 @@ scrape_configs:
 
   - job_name: "clickhouse"
     static_configs:
-      - targets: ["clickhouse-exporter:9116"]
+      - targets: ["clickhouse:9363"]
 
   - job_name: "elasticsearch"
     static_configs:
       - targets: ["elasticsearch-exporter:9114"]
+
+  - job_name: "haproxy"
+    static_configs:
+      - targets: ["haproxy:8404"]
