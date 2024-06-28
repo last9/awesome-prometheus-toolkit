@@ -46,15 +46,6 @@ groups:
           summary: ClickHouse Disk Space Low on Backups (instance {{ $labels.instance }})
           description: "Disk space on backups is below 20%.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-      - alert: ClickhouseMemoryUsageWarning
-        expr: ClickHouseAsyncMetrics_CGroupMemoryUsed / ClickHouseAsyncMetrics_CGroupMemoryTotal * 100 > 80
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: ClickHouse Memory Usage Warning (instance {{ $labels.instance }})
-          description: "Memory usage is over 80%.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-
       - alert: ElasticsearchHighQueryRate
         expr: sum(rate(elasticsearch_indices_search_query_total[1m])) > 100
         for: 5m
