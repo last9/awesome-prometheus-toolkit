@@ -99,3 +99,30 @@ groups:
         annotations:
           summary: Elasticsearch no new documents (instance {{ $labels.instance }})
           description: "No new documents for 10 min!\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HaproxyHasNoAliveBackends
+        expr: haproxy_backend_active_servers + haproxy_backend_backup_servers == 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: HAproxy has no alive backends (instance {{ $labels.instance }})
+          description: "HAProxy has no alive active or backup backends for {{ $labels.proxy }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HaproxyServerConnectionErrors
+        expr: (sum by (proxy) (rate(haproxy_server_connection_errors_total[1m]))) > 100
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: HAProxy server connection errors (instance {{ $labels.instance }})
+          description: "Too many connection errors to {{ $labels.server }} server (> 100 req/s). Request throughput may be too high.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: PostgresqlLowXidConsumption
+        expr: rate(pg_txid_current[1m]) < 5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Postgresql low XID consumption (instance {{ $labels.instance }})
+          description: "Postgresql seems to be consuming transaction IDs very slowly\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
