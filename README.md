@@ -4,7 +4,7 @@
 
 _The most apt toolkit for your Prometheus setup._
 
-Kickstarting your monitoring journey with Prometheus is a broken experience and once struggles with a standardized set of components, alerting rules, and dashboards to use. APT aims to build a standardized resource across the instrumentation, query, and alerting pipelines.
+Kickstarting your monitoring journey with Prometheus is a broken experience and one struggles with a standardized set of components, alerting rules, and dashboards to use. APT aims to build a standardized resource across the instrumentation, query, and alerting pipelines.
 
 With the v0.1 of Awesome Prometheus Toolkit, we are setting a foundation for the developer experience we want:
 
