@@ -19,7 +19,7 @@
     "fuse.js": "^7.0.0",
     "js-yaml": "^4.1.0",
     "lucide-react": "^0.379.0",
-    "next": "14.2.3",
+    "next": "14.2.10",
     "react": "^18",
     "react-dom": "^18",
     "sonner": "^1.4.41",
