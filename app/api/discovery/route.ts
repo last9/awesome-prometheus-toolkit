@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
         const { data, status }: PrometheusQueryResponse = await response.json();
 
         if (status !== "success") {
-          throw 500;
+          throw new Error("Prometheus query did not return a success status.");
         }
 
         return {
