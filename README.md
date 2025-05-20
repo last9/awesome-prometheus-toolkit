@@ -39,7 +39,7 @@ Currently, APT gives you recommendations and tracks which rules are already appl
 
 If you don’t have a Prometheus server handy but still want to play around with APT, you can also use the demo setup provided in the repo to generate metrics for the supported components (except Kubernetes).
 
-1. Run `cd promtheus-server`
+1. Run `cd prometheus-server`
 2. Run `docker compose up` to start the local server
 3. Use `localhost:9090` as the source URL on the APT home screen, without any required auth
 
