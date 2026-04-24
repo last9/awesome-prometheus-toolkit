@@ -24,6 +24,7 @@ Currently, APT gives you recommendations and tracks which rules are already appl
 4. Kubernetes
 5. Nginx
 6. PostgreSQL
+- [KubeStellar Console](https://github.com/kubestellar/console) - Multi-cluster Kubernetes dashboard with AI-powered operations, real-time observability, and CNCF project integrations across edge and cloud clusters.
 
 ## 💻 Getting Started
 
