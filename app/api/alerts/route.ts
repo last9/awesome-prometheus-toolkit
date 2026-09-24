@@ -4,9 +4,10 @@ import { Alert, MappingFile, RuleFile } from "@/lib/types";
 
 const FILE_BASE = "https://raw.githubusercontent.com/samber/awesome-prometheus-alerts/master";
 
-// To fetch yml file from a given url
+// To fetch yml file from a given url. Next.js 15+ no longer caches fetch by
+// default, so cache the upstream rule files explicitly and refresh them daily.
 async function fetchYml(url: string) {
-  const response = await fetch(url);
+  const response = await fetch(url, { next: { revalidate: 86400 } });
 
   if (!response.ok) {
     throw 404;

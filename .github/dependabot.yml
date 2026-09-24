@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # One PR per week for all non-breaking updates.
+      minor-and-patch:
+        update-types: [minor, patch]
+      # Next.js and React move together; keep their majors in a single PR.
+      next-react:
+        patterns: [next, eslint-config-next, react, react-dom, "@types/react", "@types/react-dom"]
+        update-types: [major]
