@@ -22,7 +22,7 @@
     "next": "16.3.6",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "sonner": "^1.7.4",
+    "sonner": "^2.0.8",
     "tailwind-merge": "^2.6.1",
     "tailwindcss-animate": "^1.0.7",
     "usehooks-ts": "^3.1.1",
