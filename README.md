@@ -27,6 +27,8 @@ Currently, APT gives you recommendations and tracks which rules are already appl
 
 ## 💻 Getting Started
 
+Requires Node.js 22 or newer (Node 20 is end-of-life).
+
 1. Run `npm install` to install the dependencies
 2. Run `npm run dev` to run the dev server
 3. Open `localhost:3000` in your browser
