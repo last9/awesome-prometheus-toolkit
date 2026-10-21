@@ -27,7 +27,7 @@ Currently, APT gives you recommendations and tracks which rules are already appl
 
 ## 💻 Getting Started
 
-Requires Node.js 22 or newer (Node 20 is end-of-life).
+Requires Node.js 22.23.4+, 24.22.1+ or 26.12.1+; `.nvmrc` pins 24.22.1. Earlier releases accept TLS certificates from the compromised eMudhra intermediates ([nodejs/node#66871](https://github.com/nodejs/node/pull/66871)).
 
 1. Run `npm install` to install the dependencies
 2. Run `npm run dev` to run the dev server
