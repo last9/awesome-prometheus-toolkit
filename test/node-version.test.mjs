@@ -6,7 +6,8 @@ import { test } from "node:test";
 import semver from "semver";
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
-const engines = JSON.parse(read("package.json")).engines.node;
+const pkg = JSON.parse(read("package.json"));
+const engines = pkg.engines.node;
 const lockEngines = JSON.parse(read("package-lock.json")).packages[""].engines.node;
 const nvmrc = read(".nvmrc").trim();
 
@@ -26,6 +27,13 @@ test("package-lock.json mirrors engines.node", () => {
 test(".nvmrc pins an exact version allowed by engines.node", () => {
   assert.ok(semver.valid(nvmrc), `.nvmrc "${nvmrc}" is not an exact version`);
   assert.ok(semver.satisfies(nvmrc, engines), `.nvmrc ${nvmrc} violates ${engines}`);
+});
+
+// Typing against a newer major lets code use APIs the oldest supported
+// runtime lacks; typing against an older one targets a dropped release.
+test("@types/node matches the oldest Node major engines.node allows", () => {
+  const typesMajor = semver.minVersion(pkg.devDependencies["@types/node"]).major;
+  assert.equal(typesMajor, semver.minVersion(engines).major);
 });
 
 test("README documents the pinned version", () => {
